@@ -1,22 +1,209 @@
-# recursion
+# Recursion algorithm in Clojure
 
-A Clojure library designed to ... well, that part is up to you.
+## Permutation and combination
 
-## Usage
+## Permutation
 
-FIXME
+When the order does matter it is a Permutation. A Permutation is an ordered Combination.
 
-## License
+### Permutation without repetition
 
-Copyright © 2021 FIXME
+*K* = 1 |  2 |  3
+*r* = 3
 
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
+Vertical: choose-consume
+Horizzontal: next-keep-rest
 
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
+|   |   |   |
+|---|---|---|
+| 1 | 2 | 3 |
+| 1 | 3 | 2 |
+| 2 | 1 | 3 |
+| 2 | 3 | 1 |
+| 3 | 1 | 2 |
+| 3 | 2 | 1 |
+
+```txt
+(123)()
+-> (1)(23)
+   -> (12)(3)
+      -> (123)()
+   -> (13)(2)
+     -> (132)()
+-> (2)(13)
+   -> (21)(3)
+      -> (213)()
+   -> (23)(1)
+      -> (231)()
+-> (3)(12)
+   -> (31)(2)
+      -> (312)()
+   -> (32)(1)
+      -> (321)()
+```
+
+### Permutation with repetition
+
+*K* = 1 |  2 |  3
+*r* = 3
+
+Vertical: choose-keep
+Horizzontal: next-keep-all
+
+|   |   |   |
+|---|---|---|
+| 1 | 1 | 1 |
+| 1 | 1 | 2 |
+| 1 | 1 | 3 |
+| 1 | 2 | 1 |
+| 1 | 2 | 2 |
+| 1 | 2 | 3 |
+| 1 | 3 | 1 |
+| 1 | 3 | 2 |
+| 1 | 3 | 3 |
+| 2 | 1 | 1 |
+| 2 | 1 | 2 |
+| 2 | 1 | 3 |
+| 2 | 2 | 1 |
+| 2 | 2 | 2 |
+| 2 | 2 | 3 |
+| 2 | 3 | 1 |
+| 2 | 3 | 2 |
+| 2 | 3 | 3 |
+| 3 | 1 | 1 |
+| 3 | 1 | 2 |
+| 3 | 1 | 3 |
+| 3 | 2 | 1 |
+| 3 | 2 | 2 |
+| 3 | 2 | 3 |
+| 3 | 3 | 1 |
+| 3 | 3 | 2 |
+| 3 | 3 | 3 |
+
+```txt
+(123)()
+-> (1)(123)
+   -> (11)(123)
+      -> (111)(123)
+      -> (112)(123)
+      -> (113)(123)
+   -> (12)(123)
+   -> (13)(123)
+-> (2)(123)
+   -> (21)(123)
+   -> (22)(123)
+   -> (23(123))
+-> (3)(123)
+   -> (31)(123)
+   -> (32)(123)
+   -> (22)(123)
+```
+
+## Combination
+
+When the order doesn't matter it is a Combination.
+
+### Combination without repetition
+
+*K* = 1 |  2 |  3 |  4
+*r* = 3
+
+Vertical: choose-consume
+Horizzontal: next-consume-rest
+
+|   |   |   |
+|---|---|---|
+| 1 | 2 | 3 |
+| 1 | 2 | 4 |
+| 1 | 3 | 4 |
+| 2 | 3 | 4 |
+
+```txt
+()(1234)
+-> (1)(234)
+   -> (12)(34)
+      -> (123)(4)
+      -> (124)(3)
+   -> (13)(4)
+      -> (134)(nil) 
+-> (2)(34)
+   -> (234)()
+-> (3)(4)
+   -> nil
+-> (4)(0)
+   -> nil
+```
+
+### Combination with repetition
+
+*K* = 1 |  2 |  3 |  4  
+*r* = 3
+
+Vertical: choose-keep
+Horizzontal: next-consume-rest [?]
+
+|   |   |   |
+|---|---|---|
+| 1 | 1 | 1 |
+| 1 | 1 | 2 |
+| 1 | 1 | 3 |
+| 1 | 1 | 4 |
+| 1 | 2 | 2 |
+| 1 | 2 | 3 |
+| 1 | 2 | 4 |
+| 1 | 3 | 3 |
+| 1 | 3 | 4 |
+| 1 | 4 | 4 |
+| 2 | 2 | 2 |
+| 2 | 2 | 3 |
+| 2 | 2 | 4 |
+| 2 | 3 | 3 |
+| 2 | 3 | 4 |
+| 2 | 4 | 4 |
+| 3 | 3 | 3 |
+| 3 | 3 | 4 |
+| 3 | 4 | 4 |
+| 4 | 4 | 4 |
+
+```txt
+()(1234)
+  -> (1)(1234)
+     -> (11)(1234)
+        -> (111)(1234)
+        -> (112)(234)
+        -> (113)(34)
+        -> (114)(4)
+     -> (12)(234)
+        -> (122)(234)
+        -> (123)(34)
+        -> (124)(4)
+     -> (13)(34)
+        -> (133)(34)
+        -> (134)(4)
+     -> (14)(4)
+        -> (144)(4)
+  -> (2)(234) 
+     -> (22)(234)
+        -> (222)(234)
+        -> (223)(34)
+        -> (224)(4)
+     -> (23)(34)
+        -> (233)(34)
+        -> (234)(4)
+     -> (24)(4)
+        -> (244)(4)
+  -> (3)(34)
+     -> (33)(34)
+        -> (333)(34)
+        -> (334)(4)
+     -> (34)(4)
+        -> (344)(4)
+  -> (4)(4)
+     -> (44)(4)
+        -> (444)(4)
+```
+
+## Resources
+
+- [Math is Fun](https://www.mathsisfun.com/combinatorics/combinations-permutations.html)
+- [DCode](https://www.dcode.fr/permutations-with-repetitions)

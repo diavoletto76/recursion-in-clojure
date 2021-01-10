@@ -1,4 +1,8 @@
-# Recursion algorithm in Clojure
+# Exercises on recursive algorithm in Clojure
+
+This project collects exercises and experimentations on recursive algorithms in Clojure. It's a sort of a workbench I used to study recursion and backtracking.
+
+In particular, I tried to find common abstraction under the following computations: *permutation*, *permutation with repetition*, *combination*, and *combination with repetition*. I defined all of these computations in terms of trees. So the *abstraction* is a function that generates a generic tree. Then I provided four functions that provide different ways of selecting items out of the list.
 
 ## Permutation and combination
 
@@ -10,9 +14,6 @@ When the order does matter it is a Permutation. A Permutation is an ordered Comb
 
 *K* = 1 |  2 |  3
 *r* = 3
-
-Vertical: choose-consume
-Horizzontal: next-keep-rest
 
 |   |   |   |
 |---|---|---|
@@ -46,9 +47,6 @@ Horizzontal: next-keep-rest
 
 *K* = 1 |  2 |  3
 *r* = 3
-
-Vertical: choose-keep
-Horizzontal: next-keep-all
 
 |   |   |   |
 |---|---|---|
@@ -108,9 +106,6 @@ When the order doesn't matter it is a Combination.
 *K* = 1 |  2 |  3 |  4
 *r* = 3
 
-Vertical: choose-consume
-Horizzontal: next-consume-rest
-
 |   |   |   |
 |---|---|---|
 | 1 | 2 | 3 |
@@ -138,9 +133,6 @@ Horizzontal: next-consume-rest
 
 *K* = 1 |  2 |  3 |  4  
 *r* = 3
-
-Vertical: choose-keep
-Horizzontal: next-consume-rest [?]
 
 |   |   |   |
 |---|---|---|
@@ -207,3 +199,7 @@ Horizzontal: next-consume-rest [?]
 
 - [Math is Fun](https://www.mathsisfun.com/combinatorics/combinations-permutations.html)
 - [DCode](https://www.dcode.fr/permutations-with-repetitions)
+
+## License
+
+[Attribution 4.0 International (CC BY 4.0)](http://creativecommons.org/licenses/by/4.0/)
